@@ -31,5 +31,7 @@ func myFun1(myCat Cat) {
 }
 // 引用传递
 func myFun2(myCat *Cat) {
-	(*myCat).Name = "我改变了喵咪名字，喵呜~"
+	//(*myCat) = myCat  底层进行了转化 让程序员更方便
+	//(*myCat).Name = "我改变了喵咪名字，喵呜~"
+	myCat.Name =  "我改变了喵咪名字，喵呜~"
 }
