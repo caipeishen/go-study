@@ -39,6 +39,10 @@ func main(){
 	fmt.Println(slice)
 
 
+	var slice2 []int
+	fmt.Println(slice2)
+	arr[0] = 1
+	fmt.Println(slice2)
 }
 
 
