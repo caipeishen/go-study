@@ -22,6 +22,7 @@ func main() {
 	num.println()
 
 	var num2 Integer = 999
+	// 底层做了转化 num = (&num)
 	num.change(num2)
 
 	fmt.Println(num)

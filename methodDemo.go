@@ -23,7 +23,7 @@ func (person Person) toString() {
 
 // 引用
 func (person *Person) setName(name string) {
-	// 底层做了转化 person = (*person)
+	// 底层做了转化 person = (&person)
 	person.Name = name
 }
 
@@ -40,7 +40,7 @@ func main(){
 	person.toString()
 	fmt.Println("main方法的person.Name = ", person.Name)
 
-	// 底层做了转化 person = (*person)
+	// 底层做了转化 person = (&person)
 	person.setName("Ferris")
 	fmt.Println("main方法的person.Name = ", person.Name)
 
