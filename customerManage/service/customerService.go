@@ -46,6 +46,8 @@ func (cs *CustomerService) DeleteId(id int) {
 	if index == -1 {
 		fmt.Println("改用户不存在,无法删除")
 	} else {
+		// 0 1 2 3 ，删除2的话
+		// 先保留 0 1 数据，然后再将3数据添加到0 1 数据中，返回新数据，覆盖原有数据
 		cs.Customers = append(cs.Customers[:index], cs.Customers[index+1:]...)
 
 	}
