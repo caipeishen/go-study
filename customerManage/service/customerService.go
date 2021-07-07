@@ -12,7 +12,7 @@ type CustomerService struct {
 // 客户service工厂
 func NewCustomerService() *CustomerService {
 	customerService := &CustomerService{}
-	customer := model.NewCustomer(1, "Ferris", "男", 21, "110", "peishen.cai@foxmail.com")
+	customer := model.NewCustomer(1, "张三", "男", 21, "18848848551", "peishen.cai@foxmail.com")
 	customerService.Customers = append(customerService.Customers, customer)
 	return customerService
 }

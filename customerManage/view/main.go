@@ -2,6 +2,7 @@ package main
 
 import(
 	"fmt"
+	"strings"
 	service "go-study/customerManage/service"
 )
 
@@ -15,13 +16,15 @@ type customerView struct {
 // 显示主菜单
 func (this *customerView) mainMenu() {
 	for {
-		fmt.Println("客户信息管理软件")
-		fmt.Println("1.添加客户")
-		fmt.Println("2.修改客户")
-		fmt.Println("3.删除客户")
-		fmt.Println("4.客户列表")
-		fmt.Println("5.退出")
-		fmt.Print("请选择(1-5)：")
+		
+		fmt.Println("----------------客户信息管理软件----------------")
+		fmt.Println("-----------------1 添 加 客 户-----------------")
+		fmt.Println("-----------------2 修 改 客 户-----------------")
+		fmt.Println("-----------------3 删 除 客 户-----------------")
+		fmt.Println("-----------------4 客 户 列 表-----------------")
+		fmt.Println("-----------------5 查 询 客 户-----------------")
+		fmt.Println("-----------------6 退 出 系 统-----------------")
+		fmt.Print("请选择(1-6)：")
 		
 		fmt.Scanln(&this.key)
 
@@ -35,6 +38,8 @@ func (this *customerView) mainMenu() {
 			case "4":
 				this.List()
 			case "5":
+				this.Query()
+			case "6":
 				this.loop = false
 			default :
 				fmt.Println("你的输入有误，请重新输入...")
@@ -122,12 +127,70 @@ func (c *customerView) DeleteCustomer() {
 func (c *customerView) List() {
 	var customer = c.customerService.List()
 	fmt.Println("---------------------------客户列表---------------------------")
-	fmt.Println("编号\t姓名\t性别\t年龄\t电话\t邮箱")
+	fmt.Println("编号\t姓名\t性别\t年龄\t电话\t\t邮箱")
 	for _, v := range customer {
 		a, b, c, d, e, f := v.GetInfo()
 		fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\n", a, b, c, d, e, f)
 	}
 	fmt.Println("-------------------------客户列表完成-------------------------")
+}
+
+// 查看客户信息
+func (c *customerView) Query() {
+	fmt.Println("请选择查询方式(-1退出查询):1.ID查询 2.姓名查询")
+	var choice string
+	fmt.Scanln(&choice)
+	if choice == "-1" {
+		return
+	} else if choice == "1" {
+		var id int
+		fmt.Println("请输入需要查询的ID")
+		fmt.Scan(&id)
+		resetIndex := c.customerService.GetById(id)
+		if resetIndex == -1 {
+			fmt.Println("改用户不存在")
+		} else {
+			fmt.Println("---------------------------客户信息---------------------------")
+			fmt.Println("编号\t姓名\t性别\t年龄\t电话\t\t邮箱")
+			a, b, c, d, e, f := c.customerService.List()[resetIndex].GetInfo()
+			fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\n", a, b, c, d, e, f)
+			fmt.Println("-------------------------客户信息完成-------------------------")
+			fmt.Println()
+		}
+	} else if choice == "2" {
+		fmt.Println("请选择查询方式:1.精准查询 2.模糊查询")
+		var choice2 string
+		fmt.Scan(&choice2)
+		var name string
+		fmt.Println("请输入客户姓名")
+		fmt.Scan(&name)
+		var customer = c.customerService.List()
+		if choice2 == "1" {
+			var Isin = false
+			for _, v := range customer {
+				a, b, c, d, e, f := v.GetInfo()
+				if b == name {
+					Isin = true
+					fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\n", a, b, c, d, e, f)
+				}
+			}
+			if Isin == false {
+				fmt.Println("改用户不存在")
+			}
+		} else if choice2 == "2" {
+			var Isin = false
+			for _, v := range customer {
+				a, b, c, d, e, f := v.GetInfo()
+				if strings.Contains(strings.ToLower(b), strings.ToLower(name)) {
+					Isin = true
+					fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\n", a, b, c, d, e, f)
+				}
+			}
+			if Isin == false {
+				fmt.Println("改用户不存在")
+			}
+		}
+	}
 }
 
 // 初始化客户试图结构体
@@ -137,7 +200,6 @@ func NewCV() *customerView {
 		loop:            true,
 		customerService: service.NewCustomerService(), // 完成对 customerView 结构体的 customerService 字段的初始化
 	}
-
 }
 
 // 主方法
