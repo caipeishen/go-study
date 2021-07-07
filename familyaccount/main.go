@@ -1,6 +1,6 @@
 package main
 import (
-	"go-study/familyaccount/utils"
+	"go-study/familyAccount/utils"
 	"fmt"
 )
 func main() {
