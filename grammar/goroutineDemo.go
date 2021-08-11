@@ -42,6 +42,12 @@ func main() {
 		personChan <- per1
 	}
 
+	// 传统的方法在遍历管道时，如果不关闭会阻塞而导致 deadlock
+	//for i := 0; i < len(personChan); i++ {
+	//	v := <- personChan
+	//	fmt.Println(v)
+	//}
+
 	// 关闭后不能再进行写入数据，但是可以读取数据
 	close(personChan)
 	for v := range personChan {
