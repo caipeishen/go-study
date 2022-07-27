@@ -23,6 +23,9 @@ func main() {
 	slice2 := slice[1:2] //  slice [ 20, 30, 40]    [30]
 	slice2[0] = 100      // 因为arr , slice 和slice2 指向的数据空间是同一个，因此slice2[0]=100，其它的都变化
 
+	// *** 这一行代码很重要，说明slice添加会影响arr，arr不会扩容而是覆盖
+	slice2 = append(slice2, 999)
+
 	fmt.Println("slice2=", slice2)
 	fmt.Println("slice=", slice)
 	fmt.Println("arr=", arr)
@@ -47,4 +50,10 @@ func main() {
 	copy(slice5, slice4)
 	fmt.Println("slice4=", slice4) // 1, 2, 3, 4, 5
 	fmt.Println("slice5=", slice5) // 1, 2, 3, 4, 5, 0 , 0 ,0,0,0
+
+	// copy内置函数，如果切片固定了长度，那么只会复制长度内的数据
+	var slice6 = make([]int, 1)
+	copy(slice6, slice4)
+	fmt.Println("slice4=", slice4) // 1, 2, 3, 4, 5
+	fmt.Println("slice6=", slice6) // 1
 }

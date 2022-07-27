@@ -21,6 +21,7 @@ func main() {
 
 	fmt.Printf("intArr[1]的地址=%p\n", &intArr[1])
 	fmt.Printf("slice[0]的地址=%p slice[0==%v\n", &slice[0], slice[0])
+	fmt.Printf("slice[1]的地址=%p slice[1==%v\n", &slice[1], slice[1])
 	slice[1] = 34
 	fmt.Println()
 	fmt.Println()
