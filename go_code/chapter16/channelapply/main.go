@@ -75,8 +75,13 @@ func main() {
 	go writeData(intChan)
 	go readData(intChan, exitChan)
 
-	//time.Sleep(time.Second * 10)
+	//time.Sleep(time.Second)
 	for {
+
+		// 为什么不能使用len()==0判断推出，因为len代表缓冲区的数据长度，开始的时候len()为0，其次每次把缓冲区的数据取完，len也就为0
+		//if len(exitChan) == 0 {
+		//	break
+		//}
 		_, ok := <-exitChan
 		if !ok {
 			break
